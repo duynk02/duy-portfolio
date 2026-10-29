@@ -33,9 +33,9 @@ React, Vite, TypeScript strict mode, Tailwind CSS, Motion for React và Lucide R
 - `src/components/`: các thành phần giao diện và timeline.
 - `src/styles/`: design tokens và responsive styling.
 - `public/`: ảnh chân dung đã tối ưu, favicon và tài nguyên public.
-- `docs/content-checklist.md`: các thông tin còn cần xác nhận.
+- `docs/content-checklist.md`: trạng thái nội dung đã xác nhận và các thông tin còn có thể bổ sung.
 
-Tài liệu gốc nằm ở thư mục `../references/` và không được đưa vào `dist/`. CV cũ chỉ là tài liệu tham chiếu, không được cung cấp qua nút tải xuống.
+CV `../references/CV_BackendDeveloper_NguyenKhacDuy.pdf` đã được chủ sở hữu xác nhận là bản cập nhật và được ưu tiên khi khác với prompt ban đầu. Thư mục `references/` không được đưa vào `dist/`; bản CV dùng để tải xuống được sao chép riêng vào `public/cv/CV_BackendDeveloper_NguyenKhacDuy.pdf`.
 
 ## Cập nhật nội dung
 
@@ -43,15 +43,17 @@ Sửa các trường `vi` và `en` trong `src/content/portfolio.ts` để giữ 
 
 Các cấu hình cần chú ý:
 
-| Trường | Mặc định | Ý nghĩa |
+| Trường | Giá trị hiện tại | Ý nghĩa |
 | --- | --- | --- |
-| `siteConfig.dhEndDate` | `null` | Ngày kết thúc công việc DH, cần chủ sở hữu xác nhận. Không suy ra từ CV cũ. |
-| `siteConfig.resumePath` | `null` | Đường dẫn tương đối tới PDF mới trong `public/`, ví dụ cấu trúc `cv/<ten-file>.pdf`. Chỉ bật nút tải khi file hợp lệ tồn tại. |
+| `siteConfig.dhEndDate` | `08/2026` | Ngày kết thúc công việc DH theo CV đã cập nhật. |
+| `siteConfig.resumePath` | `cv/CV_BackendDeveloper_NguyenKhacDuy.pdf` | PDF hiện tại trong `public/`, được cung cấp qua nút tải CV. Chỉ bật nút khi file hợp lệ tồn tại. |
 | `siteConfig.siteUrl` | URL Sites đã cấp | URL triển khai thật, dùng cho SEO. Có thể ghi đè qua `VITE_SITE_URL` khi chuyển hosting hoặc dùng domain riêng. |
-| `siteConfig.portraitPath` | `images/portrait.webp` | Ảnh chân dung. Bản hiện tại được tối ưu từ `../references/Avatar.jpg`. |
+| `siteConfig.portraitPath` | `images/portrait.webp` | Ảnh tối ưu từ `../references/Avatar.jpg`, hiển thị trên nền trắng và giữ màu ảnh tự nhiên. |
 | `projects[].github`, `projects[].demo` | URL thật hoặc `null` | Repository Wandermap đã xác minh từ CV: `https://github.com/duynk02/wandermap`. Demo chưa được xác nhận nên được ẩn. |
 
 Không đưa API key hoặc secret vào mã frontend hay biến môi trường có tiền tố `VITE_`; những giá trị đó có thể được xem trong bundle công khai.
+
+Khi thay CV, ghi đè PDF trong `public/cv/` cùng đường dẫn hoặc cập nhật `siteConfig.resumePath`, rồi build lại. Nội dung Wandermap phản ánh các chức năng đã triển khai trong CV; toàn bộ dự án vẫn đang được phát triển và chưa có demo production được xác nhận.
 
 ## Domain, SEO và đường dẫn con
 
@@ -84,7 +86,7 @@ Import repository, chọn thư mục chứa `package.json` làm Root Directory v
 
 Build với `VITE_BASE_PATH=/<ten-repository>/` nếu website chạy dưới repository subpath. Với repository dành cho domain gốc hoặc custom domain ở root, dùng `/`. Đặt `VITE_SITE_URL` bằng URL hoàn chỉnh tương ứng. Có thể dùng GitHub Actions với quy trình: checkout, setup Node, `npm ci`, `npm run build`, upload artifact `dist` bằng `actions/upload-pages-artifact`, rồi deploy bằng `actions/deploy-pages`. Chọn nguồn Pages là GitHub Actions trong Settings của repository.
 
-Không upload `node_modules`, thư mục `references` hay CV cũ lên static host. Artifact cần phục vụ chỉ là nội dung của `dist/`.
+Không upload `node_modules` hoặc thư mục `references` lên static host. Artifact cần phục vụ chỉ là nội dung của `dist/`, bao gồm bản CV hiện tại đã được cấu hình để tải xuống.
 
 ## Kiểm tra trước khi phát hành
 
@@ -106,4 +108,4 @@ npm run test:browser
 
 Bộ kiểm tra xác nhận responsive, chuyển/lưu ngôn ngữ, menu mobile, skip link bằng bàn phím, chi tiết bốn dự án, tiến trình timeline khi cuộn hai chiều, chế độ giảm chuyển động và lỗi trình duyệt/tài nguyên. Ảnh kiểm tra được lưu trong `.qa/desktop.png`, `.qa/mobile.png` và `.qa/full-page.png`; đây là tài liệu QA local, không thuộc nội dung public.
 
-Các dữ liệu còn cần bổ sung được ghi tại [docs/content-checklist.md](docs/content-checklist.md). Liên kết demo hoặc CV chưa được xác nhận được ẩn để tránh nút dẫn đến trang không tồn tại.
+Trạng thái nội dung và các dữ liệu còn có thể bổ sung được ghi tại [docs/content-checklist.md](docs/content-checklist.md). Liên kết demo chưa được xác nhận được ẩn để tránh nút dẫn đến trang không tồn tại.

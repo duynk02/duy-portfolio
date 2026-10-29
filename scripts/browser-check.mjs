@@ -1,7 +1,7 @@
 /* global document, window, DOMMatrixReadOnly, getComputedStyle */
 import assert from 'node:assert/strict'
 import { spawn } from 'node:child_process'
-import { existsSync } from 'node:fs'
+import { existsSync, readFileSync } from 'node:fs'
 import { mkdir } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -127,7 +127,16 @@ try {
     assert.ok((await page.locator(`#${id} h2`).innerText()).includes(heading), `Vietnamese heading: ${id}`)
   }
   assert.equal(await page.getByTestId('timeline-node').count(), 4)
-  assert.equal(await page.locator('a[download]').count(), 0, 'The outdated reference CV must not be public.')
+  const resumeLink = page.locator('a[download]')
+  assert.equal(await resumeLink.count(), 1, 'The current CV should be available to download.')
+  assert.equal(await resumeLink.innerText(), 'Tải CV')
+  const resumeHref = await resumeLink.getAttribute('href')
+  assert.equal(resumeHref, '/cv/CV_BackendDeveloper_NguyenKhacDuy.pdf')
+  const resumeResponse = await page.request.get(new URL(resumeHref, origin).href)
+  assert.ok(resumeResponse.ok(), 'The resume URL should return a successful response.')
+  const resumeBytes = await resumeResponse.body()
+  assert.equal(resumeBytes.subarray(0, 5).toString(), '%PDF-', 'The download must serve a PDF, not an HTML fallback.')
+  assert.deepEqual(resumeBytes, readFileSync(path.join(root, 'public', resumeHref)), 'The served CV should match the current configured PDF.')
   const hrefProblems = await page.locator('a').evaluateAll((anchors) => anchors.flatMap((anchor) => {
     const href = anchor.getAttribute('href')
     if (!href || href.trim() === '#' || href.startsWith('javascript:')) return [`Invalid href: ${href}`]
@@ -136,7 +145,7 @@ try {
   }))
   assert.deepEqual(hrefProblems, [])
   assert.ok(await page.locator('a[href="mailto:nkduy02contact@gmail.com"]').count() >= 1)
-  checks.push('Vietnamese default, semantic structure, real links and unpublished old CV')
+  checks.push('Vietnamese default, semantic structure, real links and current CV download')
 
   // First keyboard interaction must make the skip link available and focus main content.
   await page.keyboard.press('Tab')
@@ -156,6 +165,9 @@ try {
   assert.match(await page.locator('#home').innerText(), /Hi, I'm Duy/)
   assert.match(await page.locator('#about').innerText(), /I'm a Backend Engineer/)
   assert.match(await page.locator('#experience').innerText(), /Personal project/i)
+  assert.match(await page.locator('#experience').innerText(), /08\/2025 — 08\/2026/)
+  assert.doesNotMatch(await page.locator('#experience').innerText(), /End date to confirm/)
+  assert.equal(await resumeLink.innerText(), 'Download CV')
   assert.match(await page.locator('#contact').innerText(), /Looking for a Backend Engineer/)
   assert.equal(await page.evaluate(() => localStorage.getItem('duy-portfolio-language')), 'en')
   await page.reload({ waitUntil: 'networkidle' })

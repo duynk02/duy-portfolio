@@ -1,5 +1,6 @@
 /**
- * Editable portfolio content. The supplied brief takes precedence over the older CV.
+ * Editable portfolio content. The owner confirmed the supplied CV is the latest version.
+ * Use it for current experience and project details; retain compatible details from the brief.
  * Unknown dates and unverified URLs stay null; never turn them into fabricated claims.
  */
 export type Language = 'vi' | 'en'
@@ -12,7 +13,7 @@ interface SiteConfig {
   portraitPath: string
   resumePath: string | null
   siteUrl: string | null
-  /** Confirm the end date before setting it. The supplied PDF says 08/2026. */
+  /** Employment end date confirmed by the latest supplied CV. */
   dhEndDate: string | null
 }
 
@@ -21,12 +22,11 @@ export const siteConfig: SiteConfig = {
   email: 'nkduy02contact@gmail.com',
   github: 'https://github.com/duynk02',
   portraitPath: 'images/portrait.webp',
-  // Add an updated PDF to public/cv/ and configure its relative path here.
-  // The reference CV is deliberately not published.
-  resumePath: null,
+  // The owner confirmed this is the current CV; the CTA requires this public file to exist.
+  resumePath: 'cv/CV_BackendDeveloper_NguyenKhacDuy.pdf',
   // Configure the actual production URL to enable canonical and sitemap metadata.
   siteUrl: 'https://nguyen-khac-duy-backend-portfolio.abuzztune16384.chatgpt.site',
-  dhEndDate: null,
+  dhEndDate: '08/2026',
 }
 
 export const profile: {
@@ -44,8 +44,8 @@ export const profile: {
   },
   about: [
     {
-      vi: 'Mình là một Backend Engineer có kinh nghiệm phát triển dịch vụ Node.js, làm việc với PostgreSQL và tích hợp hệ thống phần mềm, đặc biệt trong lĩnh vực Healthcare IT.',
-      en: "I'm a Backend Engineer experienced in developing Node.js services, working with PostgreSQL, and integrating enterprise software systems, particularly in Healthcare IT.",
+      vi: 'Mình là một Backend Engineer với hơn 1,5 năm kinh nghiệm trong lĩnh vực Healthcare IT, phát triển backend và tích hợp hệ thống. Mình làm việc với Node.js, PostgreSQL và các hệ thống phần mềm y tế.',
+      en: "I'm a Backend Engineer with 1.5+ years of experience across healthcare IT, backend development, and system integration, working with Node.js, PostgreSQL, and healthcare software systems.",
     },
     {
       vi: 'Mình tập trung vào thiết kế API, xử lý dữ liệu, tối ưu truy vấn database, xây dựng hệ thống hướng sự kiện và nâng cao độ tin cậy của các dịch vụ backend.',
@@ -131,16 +131,24 @@ export const timeline: TimelineEntry[] = [
     organization: { vi: 'DH Digital Solutions', en: 'DH Digital Solutions' },
     description: [
       {
-        vi: 'Phát triển dịch vụ Node.js và tích hợp REST API để đồng bộ dữ liệu giữa HIS và EMR.',
-        en: 'Developed Node.js backend services and REST API integrations for HIS–EMR data synchronization.',
+        vi: 'Phát triển module backend Node.js cho đồng bộ HIS–EMR hai chiều; phối hợp với đối tác về hợp đồng API và chuyển đổi dữ liệu.',
+        en: 'Developed Node.js backend modules for bidirectional HIS–EMR synchronization, coordinating API contracts and data transformations with integration partners.',
       },
       {
-        vi: 'Tối ưu truy vấn và thao tác PostgreSQL; chẩn đoán tình trạng cạn connection pool trên môi trường production.',
-        en: 'Optimized PostgreSQL queries and database operations; diagnosed production connection pool exhaustion.',
+        vi: 'Tối ưu truy vấn và hàm lấy dữ liệu PostgreSQL bằng composite index, EXPLAIN ANALYZE và PL/pgSQL, giảm 15% độ trễ truy vấn.',
+        en: 'Optimized PostgreSQL queries and data-fetching functions using composite indexes, EXPLAIN ANALYZE, and PL/pgSQL, reducing query latency by 15%.',
       },
       {
-        vi: 'Phát triển middleware C#/.NET tích hợp thiết bị ký số; hỗ trợ kiểm thử tích hợp và xử lý sự cố production.',
-        en: 'Developed C#/.NET middleware for digital signature hardware and supported integration testing and production troubleshooting.',
+        vi: 'Chẩn đoán và xử lý tình trạng cạn connection pool do kết nối chưa được giải phóng, cải thiện độ tin cậy khi hệ thống chịu tải cao.',
+        en: 'Diagnosed and resolved production connection pool exhaustion caused by unreleased connections, improving reliability during peak workloads.',
+      },
+      {
+        vi: 'Phát triển ứng dụng desktop C#/.NET kết nối thiết bị ký với HIS qua HTTP API cục bộ và SDK của nhà cung cấp.',
+        en: 'Developed a C#/.NET desktop bridge connecting signature hardware to HIS through a local HTTP API and the vendor SDK.',
+      },
+      {
+        vi: 'Xây dựng dịch vụ API Node.js cho tích hợp chữ ký số và kiểm thử với Softdreams EasyCA; hỗ trợ phân tích log, khoanh vùng lỗi và kiểm thử nghiệm thu.',
+        en: 'Built Node.js API services for digital-signature integration and testing with Softdreams EasyCA; supported log analysis, bug isolation, and acceptance testing.',
       },
     ],
     technologies: ['Node.js', 'PostgreSQL', 'REST API', 'C# / .NET'],
@@ -157,15 +165,15 @@ export const timeline: TimelineEntry[] = [
     organization: { vi: 'Wandermap', en: 'Wandermap' },
     description: [
       {
-        vi: 'Phát triển nền tảng mạng xã hội du lịch; chuyển dần từ kiến trúc tập trung vào Supabase sang backend NestJS + PostgreSQL riêng biệt.',
-        en: 'Developing a travel-focused social platform and migrating from a Supabase-centered architecture to a dedicated NestJS + PostgreSQL backend.',
+        vi: 'Phát triển dự án cá nhân về du lịch và mạng xã hội; đã xây dựng REST API NestJS theo module với PostgreSQL/PostGIS và giao diện Next.js kết hợp bản đồ Mapbox.',
+        en: 'Developing a personal travel and social platform, with a modular NestJS REST API backed by PostgreSQL/PostGIS and a Next.js interface with Mapbox maps.',
       },
       {
-        vi: 'Xây dựng xác thực backend và thông báo thời gian thực; tiếp tục cải thiện kiến trúc API, quy trình triển khai và độ tin cậy của ứng dụng.',
-        en: 'Implementing backend authentication and realtime notifications while improving API architecture, deployment workflows, and application reliability.',
+        vi: 'Đã triển khai JWT với refresh token luân phiên, cookie HttpOnly và thông báo Socket.IO theo người dùng; cấu hình Docker Compose và GitHub Actions để kiểm tra, build và test.',
+        en: 'Implemented JWT authentication with rotating refresh tokens and HttpOnly cookies, user-isolated Socket.IO notifications, and Docker Compose and GitHub Actions for validation, builds, and testing.',
       },
     ],
-    technologies: ['NestJS', 'PostgreSQL', 'Socket.IO', 'Next.js'],
+    technologies: ['NestJS', 'PostgreSQL / PostGIS', 'Socket.IO', 'Next.js'],
   },
 ]
 
@@ -177,17 +185,17 @@ export const skills: {
   {
     id: 'backend',
     title: { vi: 'Phát triển backend', en: 'Backend development' },
-    technologies: ['Node.js', 'NestJS', 'Express.js', 'C#', 'ASP.NET Core', 'Python', 'FastAPI'],
+    technologies: ['Node.js', 'NestJS', 'Express.js', 'TypeScript', 'C#', 'ASP.NET Core', 'Python', 'FastAPI'],
   },
   {
     id: 'frontend',
     title: { vi: 'Phát triển frontend', en: 'Frontend development' },
-    technologies: ['TypeScript', 'React', 'Next.js', 'HTML / CSS'],
+    technologies: ['TypeScript', 'React', 'Next.js', 'Mapbox GL', 'HTML / CSS'],
   },
   {
     id: 'database',
     title: { vi: 'Cơ sở dữ liệu', en: 'Databases' },
-    technologies: ['PostgreSQL', 'PostGIS', 'PL/pgSQL', 'MongoDB'],
+    technologies: ['PostgreSQL', 'PostGIS', 'PL/pgSQL', 'MongoDB', 'SQL Optimization'],
   },
   {
     id: 'architecture',
@@ -195,6 +203,8 @@ export const skills: {
     technologies: [
       'RESTful APIs',
       'JWT Authentication',
+      'Refresh Token Rotation',
+      'Authentication Middleware',
       'Socket.IO / WebSockets',
       'Event-Driven Architecture',
       'PostgreSQL LISTEN/NOTIFY',
@@ -205,7 +215,7 @@ export const skills: {
   {
     id: 'devops',
     title: { vi: 'DevOps & công cụ', en: 'DevOps & tools' },
-    technologies: ['Git / GitHub', 'Docker', 'GitHub Actions / CI/CD', 'Render', 'Postman'],
+    technologies: ['Git / GitHub', 'Docker', 'Docker Compose', 'GitHub Actions / CI', 'Swagger / OpenAPI', 'Render', 'Postman'],
   },
 ]
 
@@ -233,32 +243,36 @@ export const projects: Project[] = [
     category: { vi: 'Nổi bật · Dự án cá nhân', en: 'Featured · Personal project' },
     status: { vi: 'Đang phát triển', en: 'In development' },
     description: {
-      vi: 'Một không gian kết nối trải nghiệm du lịch trên bản đồ. Dự án cá nhân đang được phát triển với kiến trúc frontend và backend riêng biệt.',
-      en: 'A space that connects travel experiences through maps. An evolving personal project with a separated frontend and backend architecture.',
+      vi: 'Nền tảng du lịch và mạng xã hội với bản đồ tương tác, dữ liệu địa lý PostGIS và backend NestJS. Dự án cá nhân đang tiếp tục được phát triển.',
+      en: 'A travel and social platform with interactive maps, PostGIS geospatial services, and a NestJS backend. An independently developed project that continues to evolve.',
     },
     highlights: [
       {
-        vi: 'Chuyển dần kiến trúc Next.js + Supabase sang frontend riêng và backend NestJS + PostgreSQL theo module.',
-        en: 'Migrating from Next.js + Supabase to a separate frontend and modular NestJS + PostgreSQL backend.',
+        vi: 'Thiết kế và xây dựng REST API NestJS theo module với PostgreSQL 16/PostGIS, database migration, kiểm tra dữ liệu đầu vào và xử lý lỗi có cấu trúc.',
+        en: 'Designed and developed a modular NestJS REST API with PostgreSQL 16/PostGIS persistence, database migrations, request validation, and structured error handling.',
       },
       {
-        vi: 'Xây dựng kết nối thông báo Socket.IO có bảo vệ bằng JWT và room riêng theo người dùng.',
-        en: 'Implementing JWT-protected Socket.IO notification connections with user-isolated rooms.',
+        vi: 'Xây dựng giao diện Next.js 15/React cho bảng tin, hồ sơ người dùng và bản đồ du lịch Mapbox, tích hợp REST API và thông báo thời gian thực.',
+        en: 'Built Next.js 15/React interfaces for social feeds, user profiles, and Mapbox travel maps, integrating REST APIs and realtime notifications.',
       },
       {
-        vi: 'Phát triển luồng tạo thông báo, đếm chưa đọc, trạng thái đã đọc và đồng bộ khi kết nối lại.',
-        en: 'Developing notification creation, unread counts, read state, and reconnection synchronization.',
+        vi: 'Triển khai dịch vụ dữ liệu theo vị trí với PostGIS cùng bài đăng du lịch, bình luận, tương tác, dấu trang và quan hệ theo dõi.',
+        en: 'Implemented location-based PostGIS data services and social features including travel posts, comments, reactions, bookmarks, and follow relationships.',
       },
       {
-        vi: 'Phát triển trải nghiệm du lịch trên bản đồ với Mapbox và dữ liệu địa lý PostgreSQL/PostGIS.',
-        en: 'Working on map-based travel experiences with Mapbox and PostgreSQL/PostGIS geospatial data.',
+        vi: 'Triển khai xác thực JWT với refresh token luân phiên, cookie HttpOnly và bảo vệ truy cập API.',
+        en: 'Implemented JWT authentication with rotating refresh tokens, HttpOnly cookies, and authenticated API access.',
       },
       {
-        vi: 'Tiếp tục cải thiện quy trình phát triển, kiểm tra mã nguồn và triển khai với Docker và GitHub Actions.',
-        en: 'Continuing to improve development, code validation, and deployment workflows with Docker and GitHub Actions.',
+        vi: 'Xây dựng thông báo Socket.IO có kết nối xác thực bằng JWT, room riêng theo người dùng, lưu sự kiện, bộ đếm chưa đọc và đồng bộ khi kết nối lại.',
+        en: 'Built Socket.IO notifications with JWT-authenticated connections, user-isolated rooms, persisted events, unread counters, and reconnection synchronization.',
+      },
+      {
+        vi: 'Cấu hình Docker Compose cho PostgreSQL/PostGIS và workflow GitHub Actions để tự động kiểm tra mã nguồn, build và test.',
+        en: 'Configured Docker Compose for PostgreSQL/PostGIS and GitHub Actions workflows for automated code validation, builds, and testing.',
       },
     ],
-    technologies: ['Next.js', 'React', 'TypeScript', 'NestJS', 'Node.js', 'PostgreSQL', 'Socket.IO', 'JWT', 'Docker', 'Mapbox'],
+    technologies: ['Next.js 15', 'React', 'TypeScript', 'NestJS', 'Node.js', 'PostgreSQL 16', 'PostGIS', 'Socket.IO', 'JWT', 'Docker Compose', 'GitHub Actions', 'Mapbox'],
     github: 'https://github.com/duynk02/wandermap',
     demo: null,
     graphic: 'map',
