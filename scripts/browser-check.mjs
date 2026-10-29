@@ -8,7 +8,8 @@ import { fileURLToPath } from 'node:url'
 import { chromium } from 'playwright'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
-const origin = 'http://127.0.0.1:4173'
+const basePath = process.env.TEST_BASE_PATH || '/'
+const origin = new URL(basePath, 'http://127.0.0.1:4173').href
 const executablePath = process.env.CHROME_PATH
   || 'C:/Program Files/Google/Chrome/Application/chrome.exe'
 const pause = (duration) => new Promise((resolve) => setTimeout(resolve, duration))
@@ -105,7 +106,7 @@ try {
   await mkdir(path.join(root, '.qa'), { recursive: true })
   server = spawn(process.execPath, [
     path.join(root, 'node_modules', 'vite', 'bin', 'vite.js'),
-    'preview', '--host', '127.0.0.1', '--port', '4173', '--strictPort',
+    'preview', '--host', '127.0.0.1', '--port', '4173', '--strictPort', '--base', basePath,
   ], { cwd: root, stdio: ['ignore', 'pipe', 'pipe'], windowsHide: true })
   server.stdout.on('data', (chunk) => { serverOutput += chunk.toString() })
   server.stderr.on('data', (chunk) => { serverOutput += chunk.toString() })
@@ -131,12 +132,13 @@ try {
   assert.equal(await resumeLink.count(), 1, 'The current CV should be available to download.')
   assert.equal(await resumeLink.innerText(), 'Tải CV')
   const resumeHref = await resumeLink.getAttribute('href')
-  assert.equal(resumeHref, '/cv/CV_BackendDeveloper_NguyenKhacDuy.pdf')
+  const resumePath = 'cv/CV_BackendDeveloper_NguyenKhacDuy.pdf'
+  assert.equal(resumeHref, `${basePath}${resumePath}`)
   const resumeResponse = await page.request.get(new URL(resumeHref, origin).href)
   assert.ok(resumeResponse.ok(), 'The resume URL should return a successful response.')
   const resumeBytes = await resumeResponse.body()
   assert.equal(resumeBytes.subarray(0, 5).toString(), '%PDF-', 'The download must serve a PDF, not an HTML fallback.')
-  assert.deepEqual(resumeBytes, readFileSync(path.join(root, 'public', resumeHref)), 'The served CV should match the current configured PDF.')
+  assert.deepEqual(resumeBytes, readFileSync(path.join(root, 'public', resumePath)), 'The served CV should match the current configured PDF.')
   const hrefProblems = await page.locator('a').evaluateAll((anchors) => anchors.flatMap((anchor) => {
     const href = anchor.getAttribute('href')
     if (!href || href.trim() === '#' || href.startsWith('javascript:')) return [`Invalid href: ${href}`]
@@ -190,8 +192,10 @@ try {
 
   await page.setViewportSize({ width: 1440, height: 1000 })
   const projectButtons = page.locator('#projects button[aria-expanded]')
-  assert.equal(await projectButtons.count(), 4, 'Each project needs engineering details.')
-  for (let index = 0; index < 4; index += 1) {
+  const projectCount = await page.locator('#projects article').count()
+  assert.ok(projectCount > 0, 'The portfolio should contain projects.')
+  assert.equal(await projectButtons.count(), projectCount, 'Each project needs engineering details.')
+  for (let index = 0; index < projectCount; index += 1) {
     const button = projectButtons.nth(index)
     await button.click()
     await expectAttribute(button, 'aria-expanded', 'true')
@@ -201,7 +205,7 @@ try {
     await button.click()
     await expectAttribute(button, 'aria-expanded', 'false')
   }
-  checks.push('All four project engineering details expand and collapse')
+  checks.push(`All ${projectCount} project engineering details expand and collapse`)
 
   const start = await scrollTimeline(page, 0.02)
   const middle = await scrollTimeline(page, 0.55)

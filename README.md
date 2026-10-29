@@ -84,7 +84,23 @@ Import repository, chọn thư mục chứa `package.json` làm Root Directory v
 
 ### GitHub Pages
 
-Build với `VITE_BASE_PATH=/<ten-repository>/` nếu website chạy dưới repository subpath. Với repository dành cho domain gốc hoặc custom domain ở root, dùng `/`. Đặt `VITE_SITE_URL` bằng URL hoàn chỉnh tương ứng. Có thể dùng GitHub Actions với quy trình: checkout, setup Node, `npm ci`, `npm run build`, upload artifact `dist` bằng `actions/upload-pages-artifact`, rồi deploy bằng `actions/deploy-pages`. Chọn nguồn Pages là GitHub Actions trong Settings của repository.
+Workflow [`.github/workflows/deploy-pages.yml`](.github/workflows/deploy-pages.yml) tự chạy khi push lên `main`, hoặc chạy thủ công trong tab **Actions → Deploy portfolio to GitHub Pages → Run workflow**. Workflow cài dependencies bằng `npm ci`, build Vite rồi chỉ upload `dist/`. Base path và URL SEO được lấy từ cấu hình Pages, nên hỗ trợ cả repository subpath và custom domain.
+
+Thiết lập một lần tại repository **Settings → Pages → Build and deployment → Source → GitHub Actions**. Push file workflow lên `main`, đợi job deploy thành công rồi mở `https://duynk02.github.io/duy-portfolio/`.
+
+Không chọn **Deploy from a branch → main / (root)** cho mã nguồn Vite. Cấu hình đó phục vụ `index.html` gốc gọi `/src/main.tsx`, dẫn đến lỗi 404. Không cần sửa đường dẫn script trong `index.html` gốc: Vite tự thay nó bằng JavaScript đã biên dịch khi build. Đây cũng là quy trình trong [hướng dẫn deploy GitHub Pages của Vite](https://vite.dev/guide/static-deploy.html#github-pages).
+
+Để kiểm tra cùng cấu hình GitHub Pages tại máy bằng PowerShell:
+
+```powershell
+$env:VITE_BASE_PATH = '/duy-portfolio/'
+$env:VITE_SITE_URL = 'https://duynk02.github.io/duy-portfolio/'
+npm run build
+$env:TEST_BASE_PATH = '/duy-portfolio/'
+npm run test:browser
+```
+
+Sau khi kiểm tra, dùng `Remove-Item Env:VITE_BASE_PATH, Env:VITE_SITE_URL, Env:TEST_BASE_PATH` trong terminal đó để các lần build local trở về cấu hình mặc định.
 
 Không upload `node_modules` hoặc thư mục `references` lên static host. Artifact cần phục vụ chỉ là nội dung của `dist/`, bao gồm bản CV hiện tại đã được cấu hình để tải xuống.
 

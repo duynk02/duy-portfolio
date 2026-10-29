@@ -185,7 +185,7 @@ export const skills: {
   {
     id: 'backend',
     title: { vi: 'Phát triển backend', en: 'Backend development' },
-    technologies: ['Node.js', 'NestJS', 'Express.js', 'TypeScript', 'C#', 'ASP.NET Core', 'Python', 'FastAPI'],
+    technologies: ['Node.js', 'NestJS', 'Express.js', 'TypeScript', 'C#', 'ASP.NET Core'],
   },
   {
     id: 'frontend',
@@ -313,39 +313,6 @@ export const projects: Project[] = [
     github: 'https://github.com/duynk02/DH-EMR-Sync',
     demo: null,
     graphic: 'sync',
-  },
-  {
-    id: 'hospital-briefing',
-    number: '03',
-    title: 'Hospital Briefing',
-    subtitle: {
-      vi: 'Hệ thống quản lý giao ban bệnh viện',
-      en: 'Hospital Briefing Management System',
-    },
-    category: { vi: 'Phần mềm y tế', en: 'Healthcare software' },
-    status: { vi: 'Dự án kỹ thuật', en: 'Engineering project' },
-    description: {
-      vi: 'Hệ thống hỗ trợ giao ban và báo cáo bệnh viện, với dịch vụ backend, cổng quản trị và chatbot tích hợp qua REST API.',
-      en: 'A hospital briefing and reporting system with backend services, an administrative portal, and a REST-integrated chatbot.',
-    },
-    highlights: [
-      {
-        vi: 'Phát triển dịch vụ backend cho nghiệp vụ giao ban và báo cáo bệnh viện.',
-        en: 'Developed backend services for hospital briefing and reporting workflows.',
-      },
-      {
-        vi: 'Thiết kế schema PostgreSQL và xử lý tổng hợp dữ liệu cho báo cáo quản trị.',
-        en: 'Designed PostgreSQL schemas and data aggregation for administrative reporting.',
-      },
-      {
-        vi: 'Xây dựng cổng báo cáo và tích hợp dịch vụ chatbot Rasa thông qua REST API.',
-        en: 'Built an administrative reporting portal and integrated a Rasa chatbot service through REST APIs.',
-      },
-    ],
-    technologies: ['ASP.NET Core', 'Next.js', 'PostgreSQL', 'Rasa', 'Python'],
-    github: 'https://github.com/DuyNoob02/HISMeeting',
-    demo: null,
-    graphic: 'hospital',
   },
   {
     id: 'evolis-signature',
