@@ -1,0 +1,205 @@
+.career-timeline {
+  --career-line-x: 178px;
+  position: relative;
+  margin-top: 3.5rem;
+}
+
+.career-track {
+  position: absolute;
+  left: var(--career-line-x);
+  width: 2px;
+  background: rgb(3 4 94 / 12%);
+  pointer-events: none;
+}
+
+.career-progress {
+  position: absolute;
+  inset: 0;
+  background: #03045e;
+  transform-origin: center top;
+  will-change: transform;
+}
+
+.career-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.career-milestone {
+  position: relative;
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  column-gap: 72px;
+  padding-bottom: 3.75rem;
+}
+
+.career-milestone:last-child {
+  padding-bottom: 0;
+}
+
+.career-period {
+  padding-top: 0.15rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+}
+
+.career-node {
+  position: absolute;
+  z-index: 1;
+  top: 5px;
+  left: calc(var(--career-line-x) - 7px);
+  display: grid;
+  width: 16px;
+  height: 16px;
+  place-items: center;
+  border: 1px solid rgb(3 4 94 / 30%);
+  border-radius: 50%;
+  background: #fbf8cc;
+  transition: border-color 220ms ease, box-shadow 220ms ease;
+}
+
+.career-node > span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #03045e;
+  transform: scale(0);
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.career-node[data-active='true'] {
+  border-color: #03045e;
+  box-shadow: 0 0 0 5px rgb(3 4 94 / 5%);
+}
+
+.career-node[data-active='true'] > span {
+  transform: scale(1);
+}
+
+.career-content {
+  min-width: 0;
+  padding-bottom: 2.75rem;
+  border-bottom: 1px solid rgb(3 4 94 / 14%);
+}
+
+.career-milestone:last-child .career-content {
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.career-kind {
+  display: inline-block;
+  margin-bottom: 0.65rem;
+  color: rgb(3 4 94 / 70%);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.career-content h3 {
+  margin: 0 0 0.3rem;
+  font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+  font-weight: 600;
+  line-height: 1.5;
+  letter-spacing: -0.035em;
+  overflow-wrap: anywhere;
+}
+
+.career-organization {
+  margin: 0 0 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.career-description {
+  display: grid;
+  gap: 0.45rem;
+  padding-left: 1rem;
+  margin: 0 0 1.4rem;
+  list-style: disc;
+  color: rgb(3 4 94 / 80%);
+  font-size: 0.875rem;
+  line-height: 1.85;
+}
+
+.career-description li {
+  padding-left: 0.2rem;
+}
+
+.career-description li::marker {
+  color: rgb(3 4 94 / 40%);
+  font-size: 0.7em;
+}
+
+.career-technologies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.career-technologies li {
+  padding: 0.25rem 0.65rem;
+  border: 1px solid rgb(3 4 94 / 16%);
+  border-radius: 4px;
+  font-size: 0.7rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 767px) {
+  .career-timeline {
+    --career-line-x: 8px;
+    margin-top: 2.5rem;
+  }
+
+  .career-milestone {
+    display: block;
+    padding-left: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .career-period {
+    padding-top: 0;
+    margin-bottom: 0.65rem;
+    font-size: 0.75rem;
+  }
+
+  .career-node {
+    top: 3px;
+  }
+
+  .career-kind {
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+  }
+
+  .career-content {
+    padding-bottom: 2rem;
+  }
+
+  .career-content h3 {
+    font-size: 1.15rem;
+    letter-spacing: -0.025em;
+  }
+
+  .career-description {
+    font-size: 0.825rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .career-node,
+  .career-node > span {
+    transition: none;
+  }
+
+  .career-progress {
+    will-change: auto;
+  }
+}
