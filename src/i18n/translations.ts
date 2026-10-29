@@ -1,6 +1,6 @@
 export const translations = {
   vi: {
-    title: 'Nguyễn Khắc Duy — Kỹ sư Backend',
+    title: 'Nguyễn Khắc Duy — Portfolio',
     metaDescription: 'Portfolio của Nguyễn Khắc Duy — Backend Engineer với Node.js, NestJS, PostgreSQL và tích hợp hệ thống. Khám phá kinh nghiệm và dự án của mình.',
     home: 'Trang chủ', about: 'Về mình', experience: 'Hành trình', projects: 'Dự án', contact: 'Liên hệ',
     skip: 'Đến nội dung chính', navigation: 'Điều hướng chính', openMenu: 'Mở menu', closeMenu: 'Đóng menu', language: 'Chọn ngôn ngữ', githubProfile: 'GitHub của Nguyễn Khắc Duy',
@@ -16,7 +16,7 @@ export const translations = {
     footer: 'Được xây dựng bằng sự tỉ mỉ.', backToTop: 'Về đầu trang', external: 'mở trong tab mới',
   },
   en: {
-    title: 'Nguyen Khac Duy — Backend Engineer',
+    title: 'Nguyen Khac Duy — Portfolio',
     metaDescription: 'The portfolio of Nguyen Khac Duy — Backend Engineer working with Node.js, NestJS, PostgreSQL and system integration. Explore my experience and projects.',
     home: 'Home', about: 'About', experience: 'Experience', projects: 'Projects', contact: 'Contact',
     skip: 'Skip to main content', navigation: 'Main navigation', openMenu: 'Open menu', closeMenu: 'Close menu', language: 'Choose language', githubProfile: 'Nguyen Khac Duy on GitHub',
