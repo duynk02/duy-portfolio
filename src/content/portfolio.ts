@@ -274,7 +274,7 @@ export const projects: Project[] = [
     ],
     technologies: ['Next.js 15', 'React', 'TypeScript', 'NestJS', 'Node.js', 'PostgreSQL 16', 'PostGIS', 'Socket.IO', 'JWT', 'Docker Compose', 'GitHub Actions', 'Mapbox'],
     github: 'https://github.com/duynk02/wandermap',
-    demo: null,
+    demo: 'https://wandermap-ashy.vercel.app/',
     graphic: 'map',
   },
   {
