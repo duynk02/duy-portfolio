@@ -97,7 +97,7 @@ export const timeline: TimelineEntry[] = [
   {
     id: 'technical-support',
     start: '2025-01',
-    period: { vi: '01/2025 — 08/2025', en: '01/2025 — 08/2025' },
+    period: { vi: '01/2025 — 07/2025', en: '01/2025 — 07/2025' },
     kind: { vi: 'Kinh nghiệm làm việc', en: 'Employment' },
     title: {
       vi: 'Triển khai & hỗ trợ kỹ thuật',
@@ -118,10 +118,10 @@ export const timeline: TimelineEntry[] = [
   },
   {
     id: 'backend-integration',
-    start: '2025-08',
+    start: '2025-07',
     period: {
-      vi: `08/2025 — ${siteConfig.dhEndDate ?? 'Cần xác nhận ngày kết thúc'}`,
-      en: `08/2025 — ${siteConfig.dhEndDate ?? 'End date to confirm'}`,
+      vi: `07/2025 — ${siteConfig.dhEndDate ?? 'Cần xác nhận ngày kết thúc'}`,
+      en: `07/2025 — ${siteConfig.dhEndDate ?? 'End date to confirm'}`,
     },
     kind: { vi: 'Kinh nghiệm làm việc', en: 'Employment' },
     title: {
@@ -316,7 +316,7 @@ export const projects: Project[] = [
   },
   {
     id: 'evolis-signature',
-    number: '04',
+    number: '03',
     title: 'Evolis Signature Bridge',
     subtitle: {
       vi: 'Cầu nối tích hợp thiết bị ký số',
