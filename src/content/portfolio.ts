@@ -52,8 +52,8 @@ export const profile: {
       en: 'My focus includes API design, data processing, database optimization, event-driven systems, and backend reliability.',
     },
     {
-      vi: 'Bên cạnh kinh nghiệm tích hợp HIS–EMR, mình phát triển các dự án cá nhân như Wandermap để tiếp tục hoàn thiện kỹ năng thiết kế kiến trúc backend và xây dựng sản phẩm end-to-end.',
-      en: 'Alongside my experience with HIS–EMR integrations, I build personal projects such as Wandermap to strengthen my backend architecture skills and end-to-end product development capabilities.',
+      vi: 'Bên cạnh kinh nghiệm tích hợp HIS–EMR, mình phát triển các dự án cá nhân như Wandermap để tiếp tục hoàn thiện kỹ năng thiết kế kiến trúc backend, kỹ năng thiết kế giao diện và xây dựng sản phẩm end-to-end.',
+      en: 'Alongside my experience with HIS–EMR integrations, I build personal projects such as Wandermap to strengthen my backend architecture skills, UI design skills, and end-to-end product development capabilities.',
     },
   ],
   focus: [
